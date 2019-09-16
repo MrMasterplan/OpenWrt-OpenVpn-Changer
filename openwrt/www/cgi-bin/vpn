@@ -1,10 +1,20 @@
 #!/bin/sh
 
+#re-mount the tmpfs. This clears the folder
+mount -t tmpfs tmpfs /www/cgi-bin/vpn_select
+
 echo "Content-type: text/html"
 echo ""
-echo "<html><head><title>Bash as CGI"
+echo "<html><head><title>Select your VPN configuration"
 echo "</title></head><body>"
-echo "<h1>Hello world</h1>"
-echo "Today is $(date). Let's get started."
+echo "<font size=\"30px\">"
+for cfg in $(ls /etc/openvpn/nordvpn/*.ovpn)
+do
+    cfg=$(basename $cfg)
+    ln -s /etc/openvpn/select_this.sh /www/cgi-bin/vpn_select/$cfg
+    echo "<a style=\"color: black; font-family: arial, helvetica, sans-serif;\" href=\"/cgi-bin/vpn_select/$cfg\">$cfg</a>"
+    echo "<br>"
+done
+echo "</font>"
 echo "</body></html>"
 
