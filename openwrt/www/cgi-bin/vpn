@@ -1,6 +1,7 @@
 #!/bin/sh
 
 #re-mount the tmpfs. This clears the folder
+umount /www/cgi-bin/vpn_select
 mount -t tmpfs tmpfs /www/cgi-bin/vpn_select
 
 echo "Content-type: text/html"
@@ -8,6 +9,13 @@ echo ""
 echo "<html><head><title>Select your VPN configuration"
 echo "</title></head><body>"
 echo "<font size=\"30px\">"
+
+echo "<p> Currently connected to"
+
+logread -e CN=.*.nordvpn.com | sed 's/^.*CN=//'
+
+echo "</p>"
+echo "<p> Please Select:</p>"
 for cfg in $(ls /etc/openvpn/nordvpn/*.ovpn)
 do
     cfg=$(basename $cfg)
