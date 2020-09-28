@@ -12,7 +12,7 @@ echo "<font size=\"30px\">"
 
 echo "<p> Currently connected to"
 
-logread -e CN=.*.nordvpn.com | sed 's/^.*CN=//'
+logread -e CN=.*.nordvpn.com | sed 's/^.*CN=//' | tail -n 1
 
 echo "</p>"
 echo "<p> Please Select:</p>"
